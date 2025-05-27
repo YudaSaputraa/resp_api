@@ -4,6 +4,7 @@ const router = express.Router();
 const {
     root,
     getAllPhone,
+    getPhoneById,
     addPhone,
     updatePhone,
     deletePhone,
@@ -12,6 +13,7 @@ const {
 
 router.get("/", root);
 router.get("/phones", getAllPhone);
+router.get("/phone/:id", getPhoneById);
 
 router.post("/phone", addPhone);
 
