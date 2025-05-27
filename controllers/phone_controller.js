@@ -3,163 +3,169 @@ const router = express.Router();
 const phones = require('../models/phone_model');
 const { where } = require('sequelize');
 
-const initialEnpoint = async (req, res) => {
-    const html = `
-      <html>
-        <head>
-          <title>API Documentation</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid #333;
-              padding: 8px;
-              text-align: left;
-              vertical-align: top;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-            body {
-              font-family: sans-serif;
-              padding: 20px;
-              background-color: #fafafa;
-            }
-            pre {
-              background-color: #f5f5f5;
-              padding: 10px;
-              border-radius: 5px;
-              overflow-x: auto;
-            }
-            .badge {
-              display: inline-block;
-              padding: 5px 10px;
-              border-radius: 12px;
-              color: white;
-              font-size: 12px;
-              font-weight: bold;
-            }
-            .get {
-              background-color: #4caf50;
-            }
-            .post {
-              background-color: #2196f3;
-            }
-            .put {
-              background-color: #ff9800;
-            }
-            .delete {
-              background-color: #f44336;
-            }
-          </style>
-        </head>
-        <body>
-          <h1>API Documentation</h1>
-          <table>
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Endpoint</th>
-                <th>Description</th>
-                <th>Request Body</th>
-                <th>Response</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="badge get">GET</span></td>
-                <td>/login</td>
-                <td>Untuk melakukan login</td>
-                <td>
-                  <pre>{
-    "email": "example@gmail.com",
-    "password": "example"
-  }</pre>
-                </td>
-                <td>
-                  <pre>{
-    "status": "success",
-    "message": "login success!",
-    "data": {
+const root = async (req, res) => {
+  const html = `
+    <html>
+      <head>
+        <title>API Documentation - Phone</title>
+        <style>
+          table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+          body {
+            font-family: sans-serif;
+            padding: 20px;
+            background-color: #fafafa;
+          }
+          pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+          }
+          .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 12px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+          }
+          .get {
+            background-color: #4caf50;
+          }
+          .post {
+            background-color: #2196f3;
+          }
+          .put {
+            background-color: #ff9800;
+          }
+          .delete {
+            background-color: #f44336;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>📱 Phone REST-API Documentation</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Endpoint</th>
+              <th>Description</th>
+              <th>Request Body</th>
+              <th>Response</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><span class="badge get">GET</span></td>
+              <td>/phones</td>
+              <td>Menampilkan semua data phone</td>
+              <td>-</td>
+              <td>
+                <pre>{
+  "status": "success",
+  "message": "successfully fetch all phones",
+  "data": [
+    {
       "id": 1,
-      "email": "tes@gmail.com",
-      "password": "tess",
-      "phone_number": "34353",
-      "createdAt": "2025-05-27T10:55:54.000Z",
-      "updatedAt": "2025-05-27T11:10:28.000Z"
+      "name": "Samsung S25 Ultra",
+      "brand": "Samsung",
+      "price": 20000000,
+      "img_url": "https://bim4s4kti.eraspace.com/media/wysiwyg/iphone16/iphone-1.png",
+      "specification": "Ram 12GB, storage 512GB, OneUI 14",
+      "createdAt": "2025-05-27T16:32:39.000Z",
+      "updatedAt": "2025-05-27T16:32:39.000Z"
     }
-  }</pre>
-                </td>
-              </tr>
-  
-              <tr>
-                <td><span class="badge post">POST</span></td>
-                <td>/register</td>
-                <td>Mendaftarkan user baru</td>
-                <td>
-                  <pre>{
-    "email": "tes@gmail.com",
-    "password": "tess",
-    "phone_number": "34353"
-  }</pre>
-                </td>
-                <td>
-                  <pre>{
-    "status": "success",
-    "message": "register success"
-  }</pre>
-                </td>
-              </tr>
-  
-              <tr>
-                <td><span class="badge put">PUT</span></td>
-                <td>/user/:id</td>
-                <td>Untuk mengedit data user berdasarkan id</td>
-                <td>
-                  <pre>{
-    "password": "tess",
-    "phone_number": "34353"
-  }</pre>
-                </td>
-                <td>
-                  <pre>{
-    "status": "success",
-    "message": "updated successfully",
-    "updatedUser": {
-      "id": 1,
-      "email": "tes@gmail.com",
-      "password": "tess",
-      "phone_number": "34353",
-      "createdAt": "2025-05-27T10:55:54.000Z",
-      "updatedAt": "2025-05-27T11:10:28.000Z"
-    }
-  }</pre>
-                </td>
-              </tr>
-  
-              <tr>
-                <td><span class="badge delete">DELETE</span></td>
-                <td>/user/:id</td>
-                <td>Menghapus user berdasarkan ID</td>
-                <td>-</td>
-                <td>
-                  <pre>{
-    "status": "success",
-    "message": "deletes success"
-  }</pre>
-                </td>
-              </tr>
-  
-            </tbody>
-          </table>
-        </body>
-      </html>
-    `;
-  
-    res.send(html);
-  };
+  ]
+}</pre>
+              </td>
+            </tr>
+
+            <tr>
+              <td><span class="badge post">POST</span></td>
+              <td>/phone</td>
+              <td>Menambahkan phone baru (img_url di-random otomatis)</td>
+              <td>
+                <pre>{
+  "name": "Galaxy S25",
+  "brand": "Samsung",
+  "price": 15999000,
+  "specification": "Snapdragon 8 Gen 3, 12GB RAM, 256GB"
+}</pre>
+              </td>
+              <td>
+                <pre>{
+  "status": "success",
+  "message": "Phone added successfully"
+}</pre>
+              </td>
+            </tr>
+
+            <tr>
+              <td><span class="badge put">PUT</span></td>
+              <td>/phone/:id</td>
+              <td>Mengupdate phone berdasarkan ID (bisa salah satu atau semua field)</td>
+              <td>
+                <pre>{
+  "name": "Galaxy S26",
+  "price": 16999000
+}</pre>
+              </td>
+              <td>
+                <pre>{
+  "status": "success",
+  "message": "Phone updated successfully",
+  "updatedPhone": {
+    "id": 2,
+    "name": "Samsung S28 Max",
+    "brand": "Sumsang",
+    "price": 23000000,
+    "img_url": "https://bim4s4kti.eraspace.com/media/wysiwyg/iphone16/iphone-2.png",
+    "specification": "Ram 16GB, storage 1TB, OneUI 14",
+    "createdAt": "2025-05-27T16:33:58.000Z",
+    "updatedAt": "2025-05-27T16:35:03.000Z"
+  }
+}</pre>
+              </td>
+            </tr>
+
+            <tr>
+              <td><span class="badge delete">DELETE</span></td>
+              <td>/phone/:id</td>
+              <td>Menghapus phone berdasarkan ID</td>
+              <td>-</td>
+              <td>
+                <pre>{
+  "status": "success",
+  "message": "deletes success"
+}</pre>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        <h3>Untuk lebih jelasnya bisa cek menggunakan software API testing seperti Postman, dll</h3>
+      </body>
+    </html>
+  `;
+
+  res.send(html);
+};
+
+
   
 
 const getAllPhone = async (req, res) => {
@@ -316,7 +322,7 @@ const deletePhone = async (req, res) => {
 
 
 module.exports = {
-    initialEnpoint,
+    root,
     getAllPhone,
     addPhone,
     updatePhone,

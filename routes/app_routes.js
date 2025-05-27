@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
-    initialEnpoint,
+    root,
     getAllPhone,
     addPhone,
     updatePhone,
@@ -10,7 +10,7 @@ const {
    
 } = require("../controllers/phone_controller");
 
-router.get("/", initialEnpoint);
+router.get("/", root);
 router.get("/phones", getAllPhone);
 
 router.post("/phone", addPhone);
