@@ -108,7 +108,7 @@ const initialEnpoint = async (req, res) => {
                 <td>
                   <pre>{
     "status": "success",
-    "message": "register successfully"
+    "message": "register success"
   }</pre>
                 </td>
               </tr>
@@ -179,34 +179,62 @@ const getAllUsers = async (req, res) => {
 
 const loginHandler = async (req, res) => {
     try {
-        
-        const { email, password } = req.body;
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({
-                status: "error",
-                message: "Invalid email format"
-            });
-        }
-        const userAccount = await users.findOne({
-            where: {
-                email: email
-            }
-        })
-        res.status(200).json({
-            status: "success",
-            message: "login success!",
-            data:userAccount
-        })
+      const { email, password } = req.body;
+  
+      // Cek field wajib isi
+      if (!email || !password) {
+        return res.status(400).json({
+          status: "error",
+          message: "Email dan password tidak boleh kosong"
+        });
+      }
+  
+      // Validasi format email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({
+          status: "error",
+          message: "Format email tidak valid"
+        });
+      }
+  
+      // Cari user di database
+      const userAccount = await users.findOne({
+        where: { email: email }
+      });
+  
+      // Jika user tidak ditemukan
+      if (!userAccount) {
+        return res.status(404).json({
+          status: "error",
+          message: "Akun tidak ditemukan"
+        });
+      }
+  
+      // Cek password (sementara plaintext, idealnya pakai bcrypt)
+      if (userAccount.password !== password) {
+        return res.status(401).json({
+          status: "error",
+          message: "Password salah"
+        });
+      }
+  
+      // Jika berhasil
+      return res.status(200).json({
+        status: "success",
+        message: "Login berhasil",
+        data: userAccount
+      });
+  
     } catch (error) {
-        res.status(error.statusCode || 500).json({
-            status: "Error",
-            message:error.message
-        })
-        
+      console.log(`Error: ${error.message}`);
+      return res.status(500).json({
+        status: "error",
+        message: "Internal server error"
+      });
     }
-}
+  };
+  
 
 const registerHandler = async (req, res) => {
     try {

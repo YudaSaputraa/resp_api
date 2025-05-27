@@ -11,9 +11,9 @@ const {
 } = require("../controllers/user_controller");
 
 router.get("/", initialEnpoint);
-router.get("/login", loginHandler);
 router.get("/users", getAllUsers);
 
+router.post("/login", loginHandler);
 router.post("/register", registerHandler);
 
 router.put("/user/:id", updateUser);
