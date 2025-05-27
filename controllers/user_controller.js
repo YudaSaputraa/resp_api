@@ -4,11 +4,131 @@ const users = require('../models/user_model');
 const { where } = require('sequelize');
 
 const initialEnpoint = async (req, res) => {
-    res.status(200).json({
-        status: "success",
-        message : "connected!",
-    })
-}
+    const html = `
+      <html>
+        <head>
+          <title>API Documentation</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid #333;
+              padding: 8px;
+              text-align: left;
+              vertical-align: top;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+            body {
+              font-family: sans-serif;
+              padding: 20px;
+              background-color: #fafafa;
+            }
+            pre {
+              background-color: #f5f5f5;
+              padding: 10px;
+              border-radius: 5px;
+              overflow-x: auto;
+            }
+          </style>
+        </head>
+        <body>
+          <h1>API Documentation</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Description</th>
+                <th>Request Body</th>
+                <th>Response</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>GET</td>
+                <td>/login</td>
+                <td>Untuk melakukan login</td>
+                <td>
+                  <pre>{
+    "email": "example@gmail.com",
+    "password": "example"
+  }</pre>
+                </td>
+                <td>
+                  <pre>{
+    "status": "success",
+    "message": "login success!",
+    "data": {
+      "id": 1,
+      "email": "tes@gmail.com",
+      "password": "tess",
+      "phone_number": "34353",
+      "createdAt": "2025-05-27T10:55:54.000Z",
+      "updatedAt": "2025-05-27T11:10:28.000Z"
+    }
+  }</pre>
+                </td>
+              </tr>
+  
+              <tr>
+                <td>POST</td>
+                <td>/register</td>
+                <td>Mendaftarkan user baru</td>
+                <td>
+                  <pre>{
+    "email": "tes@gmail.com",
+    "password": "tess",
+    "phone_number": "34353"
+  }</pre>
+                </td>
+                <td>
+                  <pre>{
+    "status": "success",
+    "message": "register successfully"
+  }</pre>
+                </td>
+              </tr>
+  
+              <tr>
+                <td>PUT</td>
+                <td>/user/:id</td>
+                <td>Untuk mengedit data user berdasarkan id</td>
+                <td>
+                  <pre>{
+    "email": "tes@gmail.com",
+    "password": "tess",
+    "phone_number": "34353"
+  }</pre>
+                </td>
+                <td>
+                  <pre>{
+    "status": "success",
+    "message": "updated successfully",
+    "updatedUser": {
+      "id": 1,
+      "email": "tes@gmail.com",
+      "password": "tess",
+      "phone_number": "34353",
+      "createdAt": "2025-05-27T10:55:54.000Z",
+      "updatedAt": "2025-05-27T11:10:28.000Z"
+    }
+  }</pre>
+                </td>
+              </tr>
+  
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `;
+  
+    res.send(html);
+  };
+  
 
 const getAllUsers = async (req, res) => {
     try {
