@@ -3,21 +3,20 @@ const router = express.Router();
 
 const {
     initialEnpoint,
-    getAllUsers,
-    loginHandler,
-    registerHandler,
-    updateUser,
-    deleteUser
-} = require("../controllers/user_controller");
+    getAllPhone,
+    addPhone,
+    updatePhone,
+    deletePhone,
+   
+} = require("../controllers/phone_controller");
 
 router.get("/", initialEnpoint);
-router.get("/users", getAllUsers);
+router.get("/phones", getAllPhone);
 
-router.post("/login", loginHandler);
-router.post("/register", registerHandler);
+router.post("/phone", addPhone);
 
-router.put("/user/:id", updateUser);
+router.put("/phone/:id", updatePhone);
 
-router.delete("/user/:id", deleteUser);
+router.delete("/phone/:id", deletePhone);
 
 module.exports = router;

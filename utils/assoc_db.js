@@ -1,4 +1,4 @@
-const user = require("../models/user_model");
+const user = require("../models/phone_model");
 const my_db = require("./db");
 
 const assoc = async () => {
