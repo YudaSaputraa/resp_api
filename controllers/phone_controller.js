@@ -131,8 +131,10 @@ const root = async (req, res) => {
               </td>
               <td>
                 <pre>{
-  "status": "success",
-  "message": "Phone added successfully"
+  "name": "Galaxy S25",
+  "brand": "Samsung",
+  "price": 15999000,
+  "specification": "Snapdragon 8 Gen 3, 12GB RAM, 256GB"
 }</pre>
               </td>
             </tr>
