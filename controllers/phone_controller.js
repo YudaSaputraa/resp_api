@@ -131,10 +131,8 @@ const root = async (req, res) => {
               </td>
               <td>
                 <pre>{
-  "name": "Galaxy S25",
-  "brand": "Samsung",
-  "price": 15999000,
-  "specification": "Snapdragon 8 Gen 3, 12GB RAM, 256GB"
+  "status": "success",
+  "message": "Phone added successfully"
 }</pre>
               </td>
             </tr>
@@ -145,8 +143,10 @@ const root = async (req, res) => {
               <td>Mengupdate phone berdasarkan ID (bisa salah satu atau semua field)</td>
               <td>
                 <pre>{
-  "name": "Galaxy S26",
-  "price": 16999000
+  "name": "Galaxy S25",
+  "brand": "Samsung",
+  "price": 15999000,
+  "specification": "Snapdragon 8 Gen 3, 12GB RAM, 256GB"
 }</pre>
               </td>
               <td>
