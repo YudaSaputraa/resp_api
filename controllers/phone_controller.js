@@ -199,7 +199,8 @@ const getAllPhone = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "successfully fetch all phones",
-      data: phone
+      data: phone,
+      user: req.user
     })
 
   } catch (error) {
@@ -225,7 +226,8 @@ const getPhoneById = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "Successfully fetched phone by id",
-      data: phone
+      data: phone,
+      user: req.user
     });
 
   } catch (error) {
@@ -284,7 +286,8 @@ const addPhone = async (req, res) => {
     res.status(201).json({
       status: "success",
       message: "Phone successfully added.",
-      data: newPhone
+      data: newPhone,
+      user: req.user
     });
   } catch (error) {
     console.log(`Error : ${error.message}`);
@@ -337,7 +340,8 @@ const updatePhone = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "Phone updated successfully",
-      updatedPhone
+      data: updatedPhone,
+      user: req.user
     });
 
   } catch (error) {
@@ -366,7 +370,8 @@ const deletePhone = async (req, res) => {
 
     return res.status(200).json({
       status: "success",
-      message: "Phone deleted successfully"
+      message: "Phone deleted successfully",
+      user: req.user
     });
 
   } catch (error) {
