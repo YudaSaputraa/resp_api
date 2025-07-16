@@ -10,7 +10,7 @@ const register = async (req, res) => {
         const { username, email, password } = req.body;
         if (!username, !email, !password) {
             return res.status(400).json({
-                status: "error",
+                status: false,
                 message:"All fields (username, email, password) are required and cannot be empty."
             })
         }
@@ -22,7 +22,7 @@ const register = async (req, res) => {
             password : encryptedPassword
         });
         res.status(201).json({
-            status: "success",
+            status: true,
             message: "Register successfull.",
         });
         
@@ -43,7 +43,7 @@ const login = async (req, res) => {
         });
         if (!user) {
             return res.status(401).json({
-                status: "error",
+                status: false,
                 message: "User not found!",
             });
             
@@ -52,7 +52,7 @@ const login = async (req, res) => {
         const valid = bcrypt.compareSync(password, user.password);
         if (!valid) {
             return res.status(401).json({
-                 status: "error",
+                 status: false,
                 message: "Invalid password!",
             })
         };
@@ -64,7 +64,7 @@ const login = async (req, res) => {
             expiresIn: '1h',
         })
         res.json({
-            status: "sucess",
+            status: true,
             message: "login success!",
             token: token
         })
@@ -77,7 +77,7 @@ const login = async (req, res) => {
 
 const profile = async (req, res) => {
     res.status(200).json({
-        status: "success",
+        status: true,
         message: "sucessfully fetch profile",
         data : req.user
     })

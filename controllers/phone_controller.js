@@ -76,7 +76,7 @@ const root = async (req, res) => {
               <td>-</td>
               <td>
                 <pre>{
-  "status": "success",
+  "status": true,
   "message": "successfully fetch all phones",
   "data": [
     {
@@ -100,7 +100,7 @@ const root = async (req, res) => {
   <td>-</td>
   <td>
     <pre>{
-  "status": "success",
+  "status": true,
   "message": "Successfully fetched phone by id",
   "data": {
     "id": 6,
@@ -131,7 +131,7 @@ const root = async (req, res) => {
               </td>
               <td>
                 <pre>{
-  "status": "success",
+  "status": true,
   "message": "Phone added successfully"
 }</pre>
               </td>
@@ -151,7 +151,7 @@ const root = async (req, res) => {
               </td>
               <td>
                 <pre>{
-  "status": "success",
+  "status": true,
   "message": "Phone updated successfully",
   "updatedPhone": {
     "id": 2,
@@ -174,7 +174,7 @@ const root = async (req, res) => {
               <td>-</td>
               <td>
                 <pre>{
-  "status": "success",
+  "status": true,
   "message": "deletes success"
 }</pre>
               </td>
@@ -197,7 +197,7 @@ const getAllPhone = async (req, res) => {
   try {
     const phone = await phones.findAll();
     res.status(200).json({
-      status: "success",
+      status: true,
       message: "successfully fetch all phones",
       data: phone,
       user: req.user
@@ -218,13 +218,13 @@ const getPhoneById = async (req, res) => {
 
     if (!phone) {
       return res.status(404).json({
-        status: "failed",
+        status: false,
         message: `Phone with id ${id} not found`
       });
     }
 
     res.status(200).json({
-      status: "success",
+      status: true,
       message: "Successfully fetched phone by id",
       data: phone,
       user: req.user
@@ -233,7 +233,7 @@ const getPhoneById = async (req, res) => {
   } catch (error) {
     console.log(`error : ${error.message}`);
     res.status(500).json({
-      status: "error",
+      status: false,
       message: "Internal server error"
     });
   }
@@ -246,14 +246,14 @@ const addPhone = async (req, res) => {
 
     if (!name || !brand || !price || !specification) {
       return res.status(400).json({
-        status: "error",
+        status: false,
         message: "All fields (name, brand, price, specification) are required and cannot be empty."
       });
     }
 
     if (isNaN(price) || price <= 0) {
       return res.status(400).json({
-        status: "error",
+        status: false,
         message: "Price must be a valid positive number."
       });
     }
@@ -284,7 +284,7 @@ const addPhone = async (req, res) => {
     });
 
     res.status(201).json({
-      status: "success",
+      status: true,
       message: "Phone successfully added.",
       data: newPhone,
       user: req.user
@@ -305,7 +305,7 @@ const updatePhone = async (req, res) => {
     // Cek apakah ada data yang dikirim
     if (!name && !brand && !price && !specification) {
       return res.status(400).json({
-        status: "error",
+        status: false,
         message: "At least one field (name, brand, price, specification) must be provided for update."
       });
     }
@@ -316,7 +316,7 @@ const updatePhone = async (req, res) => {
     if (price) {
       if (isNaN(price) || price <= 0) {
         return res.status(400).json({
-          status: "error",
+          status: false,
           message: "Price must be a valid positive number."
         });
       }
@@ -330,7 +330,7 @@ const updatePhone = async (req, res) => {
 
     if (result[0] === 0) {
       return res.status(404).json({
-        status: "failed",
+        status: false,
         message: "Phone not found or no changes applied!"
       });
     }
@@ -338,7 +338,7 @@ const updatePhone = async (req, res) => {
     const updatedPhone = await phones.findByPk(id);
 
     res.status(200).json({
-      status: "success",
+      status: true,
       message: "Phone updated successfully",
       data: updatedPhone,
       user: req.user
@@ -363,13 +363,13 @@ const deletePhone = async (req, res) => {
 
     if (targetPhone === 0) {
       return res.status(404).json({
-        status: "failed",
+        status: false,
         message: "Phone doesn't exist!"
       });
     }
 
     return res.status(200).json({
-      status: "success",
+      status: true,
       message: "Phone deleted successfully",
       user: req.user
     });

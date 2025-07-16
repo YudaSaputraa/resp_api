@@ -5,7 +5,7 @@ function verifyToken(req, res, next) {
     const autHeader = req.headers['authorization'];
     if (!autHeader) {
         return res.status(401).json({
-            status: "error",
+            status: false,
             message: "token required!",
         });
 
@@ -17,7 +17,7 @@ function verifyToken(req, res, next) {
         next();
     } catch (error) {
         res.status(403).json({
-            status: "error",
+            status: false,
             message: "invalid or expired token"
         });
     }
